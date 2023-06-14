@@ -1,0 +1,44 @@
+﻿
+@model ApplicationWorkSpace.Models.FilesViewModel
+@{
+    ViewData["Title"] = "Roles Page";
+}
+
+<div class="text-left">
+    <h2 style="margin-bottom:50px">Множественный файл загрузчик</h2>
+
+    <!-- Чтобы отправлять файлы на сервер, мы должны использовать форму с методом публикации, также необходимо добавить кодировку multipart/form-data.
+         В противном случае файлы не будут отправлены на сервер. -->
+
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="files" multiple />
+        <button type="submit">Загрузить</button>
+    </form>
+
+    <!-- Чтобы показать пользователю сообщение об успехе  -->
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success" style="margin-top:50px">
+            @ViewBag.Message
+        </div>
+    }
+
+    <p style="margin-top: 50px">Список файлов</p>
+    <!-- Получить все файлы с сервера -->
+    <ul>
+        
+
+        @foreach (var item in Model.Files)
+        {
+            <li>
+                <a asp-action="Download"
+               asp-route-filename="@item.Name">
+                    @item.Name
+                </a>
+            </li>
+        }
+
+    </ul>
+
+</div>
+ 
